@@ -1,65 +1,31 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import dynamic from 'next/dynamic'
-import { supabase } from '@/lib/supabase'
-import { Resume } from '@/lib/types'
-import SideLeft from './sidebarleft'
-import ToolBar from './toolbar'
 import Header from '@/components/header'
-
-const PDFViewer = dynamic(() => import('./viewer'), { ssr: false })
+import ResumePreview from '@/components/resumePreview'
+import { sampleResume } from './resume_data'
 
 export default function ResumeEditPage() {
-  const [resumes, setResumes] = useState<Resume[]>([])
-  const [selectedResume, setSelectedResume] = useState<Resume | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const fetchResumes = async () => {
-      setLoading(true)
-      const { data, error } = await supabase
-        .from('resumes')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(10)
-
-      if (data && data.length > 0) {
-        setResumes(data)
-        setSelectedResume(data[0])
-      }
-
-      setLoading(false)
-    }
-
-    fetchResumes()
-  }, [])
-
   return (
-    <>
+    <main className="min-h-screen bg-gray-50">
       <Header />
-      <main className="min-h-screen flex">
-        {/* 左侧总览栏 */}
-        <aside className="w-64 border-r border-gray-200">
-          <SideLeft resumes={resumes} onSelect={setSelectedResume} current={selectedResume} />
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="w-64 min-h-screen border-r bg-white p-4">
+          <h2 className="text-lg font-semibold mb-4">Sections</h2>
+          <ul className="space-y-2 text-sm text-gray-700">
+            <li>Basic Info</li>
+            <li>Education</li>
+            <li>Experience</li>
+            <li>Skills</li>
+            <li>Projects</li>
+          </ul>
         </aside>
 
-        {/* 中间 PDF 预览 */}
-        <section className="flex-1 flex justify-center items-center bg-gray-100">
-        {selectedResume ? (
-            <PDFViewer url={selectedResume.file_url} />
-        ) : loading ? (
-            <p className="text-blue-500">Loading...</p>
-        ) : (
-            <p className="text-red-500">No resume selected</p>
-        )}
+        {/* Resume Preview Area */}
+        <section className="flex-1 flex justify-center py-10 px-4 overflow-auto">
+          <ResumePreview resume={sampleResume} />
         </section>
-
-        {/* 右侧工具栏 */}
-        <aside className="w-64 border-l border-gray-200">
-          <ToolBar selectedResume={selectedResume} refresh={() => location.reload()} />
-        </aside>
-      </main>
-    </>
+      </div>
+    </main>
   )
 }
