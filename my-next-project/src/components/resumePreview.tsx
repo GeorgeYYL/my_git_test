@@ -24,12 +24,18 @@ type Resume = {
   }[]
 }
 
-export default function ResumePreview({ resume }: { resume: Resume }) {
+export default function ResumePreview({
+        resume,
+        onSectionClick,
+      }: {
+        resume: Resume
+        onSectionClick?: (section: 'basics' | 'experience' | 'education') => void
+      }) {
   return (
-    <div className="bg-white w-full max-w-[794px] mx-auto shadow-md rounded-lg text-gray-800">
+    <div className="bg-white w-full max-w-[794px] mx-auto shadow-md rounded-lg text-gray-800 relative isolate z-0">
       
       {/* Basics */}
-      <HoverBlock>
+      <HoverBlock onClick={() => onSectionClick?.('basics')}>
         <h1 className="text-3xl font-bold">{resume.basics.name}</h1>
         <p className="text-sm text-gray-600">
           {resume.basics.email} · {resume.basics.phone}
@@ -38,7 +44,7 @@ export default function ResumePreview({ resume }: { resume: Resume }) {
       </HoverBlock>
 
       {/* Experience */}
-      <HoverBlock>
+      <HoverBlock onClick={() => onSectionClick?.('experience')}>
         <h2 className="text-xl font-semibold mb-4">Experience</h2>
         {resume.experience.map((exp, i) => (
           <div key={i} className="mb-4">
@@ -54,7 +60,7 @@ export default function ResumePreview({ resume }: { resume: Resume }) {
       </HoverBlock>
 
       {/* Education */}
-      <HoverBlock>
+      <HoverBlock onClick={() => onSectionClick?.('education')}>
         <h2 className="text-xl font-semibold mb-4">Education</h2>
         {resume.education.map((edu, i) => (
           <div key={i} className="mb-4">
