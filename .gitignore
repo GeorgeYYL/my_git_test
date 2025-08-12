@@ -1,41 +1,91 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# -------------------------
+# FRONTEND (Next.js)
+# -------------------------
 
 # dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+/frontend/node_modules
+/frontend/.pnp
+/frontend/.pnp.*
+/frontend/.yarn/*
+!/frontend/.yarn/patches
+!/frontend/.yarn/plugins
+!/frontend/.yarn/releases
+!/frontend/.yarn/versions
 
 # testing
-/coverage
+/frontend/coverage
 
-# next.js
-/.next/
-/out/
+# next.js build output
+/frontend/.next/
+/frontend/out/
 
-# production
-/build
+# production build
+/frontend/build
 
 # misc
+/frontend/.DS_Store
+/frontend/*.pem
+
+# debug logs
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+/frontend/.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+/frontend/.env*
+/frontend/.vercel
+
+# typescript
+/frontend/*.tsbuildinfo
+/frontend/next-env.d.ts
+
+
+# -------------------------
+# BACKEND (Python / FastAPI)
+# -------------------------
+
+# Python cache
+/backend/__pycache__/
+/backend/**/*.py[cod]
+/backend/*.pyc
+
+# Virtual environments
+/backend/.venv
+/backend/env
+/backend/venv
+/backend/ENV
+/backend/env.bak
+/backend/venv.bak
+
+# Python logs
+/backend/*.log
+
+# Python packaging
+/backend/build/
+/backend/dist/
+/backend/*.egg-info/
+/backend/.eggs
+
+# mypy / pytest / coverage
+/backend/.mypy_cache/
+/backend/.pytest_cache/
+/backend/htmlcov/
+/backend/.coverage
+/backend/.coverage.*
+/backend/.cache
+
+# env files
+/backend/.env
+/backend/.env.*
+
+# -------------------------
+# General (both)
+# -------------------------
 .DS_Store
 *.pem
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
+# backend venv
+/backend/.venv
+/backend/__pycache__/
 
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
