@@ -2,11 +2,11 @@
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+#1)create FastAPI app
 app = FastAPI(title="Resume API (minimal)")
-
+#2)configure CORS
 cors_env = os.getenv("CORS_ORIGINS", "http://localhost:3000")
-# 若用户误设成列表或其他类型，也强制转成字符串再 split
+
 if not isinstance(cors_env, str):
     cors_env = str(cors_env)
 
@@ -19,7 +19,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-@app.get("/api/health")
-def health():
-    return {"ok": True}
+#3) Loading routes
+from app.routers import health  # noqa: E402
+app.include_router(health.router, prefix="/api")
